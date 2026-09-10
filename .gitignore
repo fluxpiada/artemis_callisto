@@ -1,0 +1,10 @@
+**/.DS_Store
+.claude/
+
+# Build output. Artifacts belong on GitHub Releases, not in the repo.
+versions/*
+!versions/.gitkeep
+
+# Generated into the manuscript at build time.
+manuscript/front/20_releases.md
+manuscript/front/30_build_info.md

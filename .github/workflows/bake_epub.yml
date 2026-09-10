@@ -1,0 +1,52 @@
+name: Bake EPUB
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-epub:
+    runs-on: ubuntu-latest
+
+    steps:
+      # fetch-depth: 0 so that `git describe` in --auto can see the tags.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Pandoc
+        run: sudo apt-get update && sudo apt-get install -y pandoc
+
+      # The build stamp and the release history are generated inside the bake
+      # script, not here, so that a local build produces the same EPUB as CI.
+      - name: Bake EPUB
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          chmod +x epub/bake_book_epub.sh
+          epub/bake_book_epub.sh --auto
+
+      # Always kept, so an untagged manual run still gives you something to
+      # download and check.
+      - name: Upload EPUB as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: epub
+          path: versions/*.epub
+
+      - name: Attach EPUB to the Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: versions/*.epub

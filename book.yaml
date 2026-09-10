@@ -1,0 +1,69 @@
+# =============================================================================
+# Everything that makes this book yours lives in this file.
+#
+# The build scripts read it on every run, so changing a value here changes the
+# EPUB, the PDF and the output filenames at once. There is no second place to
+# keep in sync.
+#
+# The one exception is index.html, which GitHub Pages serves as a static file
+# and so cannot read anything at build time. ./setup.sh fills that in once.
+# =============================================================================
+
+# --- Identity ----------------------------------------------------------------
+title:       "Your Book Title"
+byline:      "A. N. Author"          # as it appears on the PDF cover sheet
+author-sort: "Author, A. N."         # library sort order, for the EPUB
+description: "One sentence about your book."
+rights:      "© 2026 A. N. Author"
+publisher:   "self-published"
+lang:        "en"
+
+# Output filenames are built from this. Keep it filesystem-safe: no spaces,
+# no slashes.  ->  versions/Your_Book_Title_v1.0.0.epub
+slug:        "Your_Book_Title"
+
+# A unique, permanent id for the EPUB. ./setup.sh generates a real one.
+# Never copy another book's identifier — e-readers use it to tell books apart.
+identifier:  "urn:uuid:__UUID__"
+
+# --- Running header (Shunn format: "Surname / Keyword / Page") ----------------
+surname:     "Author"
+shorttitle:  "Keyword"
+
+# --- Where it lives ----------------------------------------------------------
+github:
+  owner: "__GH_OWNER__"
+  repo:  "__GH_REPO__"
+
+cover: "images/cover.png"
+
+# --- The PDF cover sheet -----------------------------------------------------
+# Shunn puts your contact details in the upper-left of page one: legal name,
+# address, phone, email. Fill the bracketed lines in before submitting
+# anywhere. Do NOT add a tax or national insurance number.
+contact:
+  - "A. N. Author"
+  - "[street and number]"
+  - "[postcode] [city]"
+  - "[country]"
+  - "[phone]"
+  - "[email]"
+
+# THE FONT. Any family installed on your machine; the name must match exactly.
+# List what you have with:  pdf/bake_book_pdf.sh --list-fonts
+# Leave commented out for the automatic fallback chain (Times New Roman
+# locally, Liberation Serif on CI). Shunn asks for a plain serif at 12pt.
+# mainfont: "Times New Roman"
+
+# --- How the PDF filter treats two ambiguous constructs ----------------------
+# Both default to off, because both silently change how your text renders.
+shunn:
+  # Fenced code blocks become centred "screen text" instead of code. Turn this
+  # on only if your book has no real code samples in it — with it on, a pasted
+  # shell transcript loses its indentation.
+  machinetext: false
+
+  # Rebuild scene dividers that pandoc misread as a definition list. Only
+  # needed if you write dividers as a bare "~ * ~" with no "##" in front.
+  # The supported form is "## ~ * ~", which never needs this.
+  repair_dividers: false

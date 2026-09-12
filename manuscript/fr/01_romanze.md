@@ -11,7 +11,8 @@ Elle n’existait que pour poser ses lèvres sur la peau de sa déesse, parfumé
 Le ciel était clair et profondément noir ; les étoiles ressemblaient à des traces d’aiguilles d’argent, aux trous fins et précis laissés par les flèches d’Artémis. 
 
 Le cœur de Callisto semblait éclater sous l’effet de son adoration irrépressible pour son amante divine.
-Ps: ce passage, fais attention ! , la pression oui mais pas trop hein!!
-Un truc genre :" depuis l'apparition divine, le cœur de Callisto s'était remis à battre d'un rythme trop longtemps assourdi. Il prenait une ampleur incessante qui en faisait trembler ses côtes, son âme emportée dans ce flot tout puissant. Cela semblait une tempête irrépressible d'où s'échapper un nom. Son nom."
+
+<!-- Ps: ce passage, fais attention ! , la pression oui mais pas trop hein!!
+Un truc genre :" depuis l'apparition divine, le cœur de Callisto s'était remis à battre d'un rythme trop longtemps assourdi. Il prenait une ampleur incessante qui en faisait trembler ses côtes, son âme emportée dans ce flot tout puissant. Cela semblait une tempête irrépressible d'où s'échapper un nom. Son nom." -->
  
 La chouette hulotte veillait sur les deux déesses chaudes et fiévreuses. Par son cri, elle montrait le chemin à Callisto. Les sapins exhalaient leur parfum résineux, tandis que la brise nocturne faisait frissonner la peau nue de la nymphe.  

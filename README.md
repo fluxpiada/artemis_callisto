@@ -11,6 +11,19 @@ Two outputs, from the same chapters:
 Push a version tag and GitHub Actions builds both and attaches them to a
 Release. There is also a small download page, served straight from your repo.
 
+## using a Github template
+Use this template is a copy with no link back, so GitHub never updates it. But you can make each future update a single command.
+Once per book, tell Git where the template lives:
+
+
+```cd ~/<<YOUR REPO>>
+git remote add template https://github.com/fluxpiada/book_bake.git
+```
+Each time the template changes:
+```
+git fetch template
+git checkout template/main -- lib epub pdf .github wiki .gitignore
+```
 ## Start
 
 Click **Use this template**, clone your new repo, then:

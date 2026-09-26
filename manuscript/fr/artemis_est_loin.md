@@ -1,3 +1,5 @@
+# Artémis s'est éloignée 
+
 Alors, Artémis pensait-elle encore à son amante Callisto ?
 
 La forêt était ombragée et silencieuse. Si elle avait été témoin d’un geste divin, elle se taisait comme l’eau de la source des Oréades. La lune n’offrait qu’une étroite bande d’illumination suggestive. La lune elle aussi ne savait-elle plus rien de l’absence assourdissante d’Artémis ?

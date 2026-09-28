@@ -36,6 +36,8 @@ jobs:
       # 2. Install Pandoc, XeLaTeX and a Times-metric font
       #    Liberation Serif / Mono stand in for Times New Roman / Courier New;
       #    bake_book_pdf.sh probes for whichever is present.
+      #    texlive-plain-generic is where Ubuntu puts ulem.sty, which
+      #    shunn.latex loads for Classic underlining. Without it: no PDF.
       - name: Install Pandoc and TeX
         run: |
           sudo apt-get update
@@ -44,11 +46,12 @@ jobs:
             texlive-xetex \
             texlive-latex-recommended \
             texlive-latex-extra \
+            texlive-plain-generic \
             texlive-fonts-recommended \
             fonts-liberation \
             poppler-utils
 
-      # 3. Bake the manuscript
+      # 3. Bake the manuscript — one PDF per folder in manuscript/
       - name: Bake PDF
         run: |
           chmod +x pdf/bake_book_pdf.sh
@@ -56,25 +59,29 @@ jobs:
           [[ "${{ inputs.a4 }}" == "true" ]]         && ARGS+=(--a4)
           [[ "${{ inputs.title_page }}" == "true" ]] && ARGS+=(--title-page)
           [[ "${{ inputs.classic }}" == "true" ]]    && ARGS+=(--classic)
-          pdf/bake_book_pdf.sh "${ARGS[@]}"
+          for dir in manuscript/*/; do
+            pdf/bake_book_pdf.sh "${ARGS[@]}" --lang="$(basename "$dir")"
+          done
         shell: bash
 
-      # 4. Sanity check. Assert real structure rather than "a # appears
-      #    somewhere": a manuscript that came out as one page did not build,
-      #    and the Shunn running header ("Surname / Keyword / Page") is on
-      #    every page of a correct build regardless of whose book it is.
+      # 4. Sanity check, on every PDF. Assert real structure rather than "a #
+      #    appears somewhere": a manuscript that came out as one page did not
+      #    build, and the Shunn running header ("Surname / Keyword / Page") is
+      #    on every page of a correct build regardless of whose book it is.
       #
       #    Note the end marker is NOT greppable -- \theend spaces its three
       #    hashes with \hspace, so pdftotext puts each on its own line.
       - name: Verify output
         run: |
-          PDF=$(ls -t versions/*_manuscript*.pdf | head -1)
-          echo "Checking $PDF"
-          pdfinfo "$PDF"
-          PAGES=$(pdfinfo "$PDF" | awk '/^Pages:/ {print $2}')
-          [ "$PAGES" -ge 2 ] || { echo "Only $PAGES page(s) — build looks wrong"; exit 1; }
-          pdftotext "$PDF" - | grep -qE '^.+ / .+ / [0-9]+$' \
-            || { echo "No Shunn running header found"; exit 1; }
+          for PDF in versions/*_manuscript*.pdf; do
+            echo "Checking $PDF"
+            pdfinfo "$PDF"
+            PAGES=$(pdfinfo "$PDF" | awk '/^Pages:/ {print $2}')
+            [ "$PAGES" -ge 2 ] || { echo "Only $PAGES page(s) — build looks wrong"; exit 1; }
+            pdftotext "$PDF" - | grep -qE '^.+ / .+ / [0-9]+$' \
+              || { echo "No Shunn running header found in $PDF"; exit 1; }
+          done
+        shell: bash
 
       # 5. Keep the build available even when not tagged
       - name: Upload PDF artifact

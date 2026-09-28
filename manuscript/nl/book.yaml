@@ -1,0 +1,18 @@
+# Dutch edition. Overrides the root book.yaml key by key; anything left out
+# (author, contact block, cover, font) comes from there. lang: is set by the
+# folder name, so it is not repeated here.
+
+# --- EPUB metadata -----------------------------------------------------------
+title:          "De Romance van Artemis en Callisto"
+shorttitle:     "Artemis"             # running header on the PDF
+slug:           "Artemis_en_Callisto" # -> versions/Artemis_en_Callisto_v1.0.0_nl.epub
+description:    "Een mythische romance tussen de godin Artemis en de nimf Callisto."
+rights:         "© 2026 F. J. S. Remmelzwaal"
+
+# Permanent id for this edition — never change it, never reuse it.
+# nl is the default language, so this matches the root book.yaml.
+identifier:     "urn:uuid:ad861c7d-dbc6-4086-b04e-80b3228d7fd1"
+
+# --- Words the build writes into your book -----------------------------------
+wordcount-text: "ongeveer %s woorden"
+edition-text:   "Huidige editie"

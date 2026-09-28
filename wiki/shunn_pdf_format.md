@@ -161,16 +161,21 @@ otherwise produce "Missing character" warnings and dropped spaces.
 
 ## 6. Which files go in
 
-Chapters are the numbered files directly in `manuscript/`:
+Chapters are the numbered files directly in the language folder,
+`manuscript/<lang>/` — `manuscript/en/` unless you pass `--lang=`:
 
 ```text
-manuscript/NN_*.md     chapters — these, in filename order, are the PDF
-manuscript/front/      front matter — EPUB only; the Shunn cover sheet
+manuscript/en/NN_*.md  chapters — these, in filename order, are the PDF
+manuscript/en/front/   front matter — EPUB only; the Shunn cover sheet
                        replaces it
-manuscript/back/       back matter — added only with --with-extras, and then
+manuscript/en/back/    back matter — added only with --with-extras, and then
                        placed after the `# # #`
-manuscript/draft/      never built
+manuscript/en/draft/   never built
 ```
+
+The word count phrase on the cover sheet comes from `wordcount-text:` in
+`book.yaml`, so a Dutch manuscript can set `"ongeveer %s woorden"` in
+`manuscript/nl/book.yaml`.
 
 Keep chapter numbers zero-padded (`01_`, `02_` … `10_`), or `10_` sorts before
 `2_` and your book reorders itself.

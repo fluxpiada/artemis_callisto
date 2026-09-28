@@ -4,7 +4,8 @@
 # Build the PDF in Shunn manuscript format.
 # https://www.shunn.net/format/story/
 #
-# Run it from the repo root. Everything configurable lives in book.yaml.
+# Run it from the repo root. Everything configurable lives in book.yaml, and
+# per language in manuscript/<lang>/book.yaml.
 # ============================================================
 
 set -euo pipefail
@@ -17,6 +18,7 @@ TEMPLATE="pdf/shunn.latex"
 FILTER="pdf/shunn.lua"
 
 VERSION=""
+BUILD_LANG=""
 CLASSIC=false
 PAPERSIZE="letter"
 TITLEPAGE=false
@@ -29,6 +31,7 @@ Usage: pdf/bake_book_pdf.sh [options]
 
   --auto           Take the version from the latest git tag (for CI)
   --version=VER    Use VER as the version string
+  --lang=CODE      Build manuscript/CODE/ (default: lang: in book.yaml)
   --font=NAME      Typeset in NAME (e.g. --font="Georgia"). Overrides the
                    mainfont: key in book.yaml
   --list-fonts     List font families installed on this machine, then exit
@@ -60,6 +63,7 @@ for arg in "$@"; do
     # See the note in epub/bake_book_epub.sh: the --match is load-bearing.
     --auto)         VERSION=$(git describe --tags --abbrev=0 --match='v*' 2>/dev/null || echo "v0.0.0-auto") ;;
     --version=*)    VERSION="${arg#*=}" ;;
+    --lang=*)       BUILD_LANG="${arg#*=}" ;;
     --font=*)       FONT="${arg#*=}" ;;
     --list-fonts)   list_fonts; exit 0 ;;
     --classic)      CLASSIC=true ;;
@@ -82,6 +86,8 @@ fi
 for f in "$TEMPLATE" "$FILTER"; do
   [[ -f "$f" ]] || { echo "❌ Missing $f — run this from the repo root." >&2; exit 1; }
 done
+
+use_language "$BUILD_LANG"
 
 SLUG=$(read_meta slug)
 [[ -n "$SLUG" ]] || { echo "❌ book.yaml has no 'slug'." >&2; exit 1; }
@@ -135,14 +141,14 @@ fi
 # ------------------------------------------------------------
 # 📚 Assemble the manuscript
 # ------------------------------------------------------------
-# Chapters are the numbered files directly in manuscript/. Front matter and
-# back matter live in subdirectories, so they are excluded here by the shape
-# of the glob rather than by counting digits in filenames.
+# Chapters are the numbered files directly in manuscript/<lang>/. Front matter
+# and back matter live in subdirectories, so they are excluded here by the
+# shape of the glob rather than by counting digits in filenames.
 shopt -s nullglob
-CHAPTERS=(manuscript/[0-9]*_*.md)
+CHAPTERS=("$MS_DIR"/[0-9]*_*.md)
 shopt -u nullglob
 [[ ${#CHAPTERS[@]} -eq 0 ]] && {
-  echo "❌ No chapter files found. Chapters are manuscript/NN_Name.md" >&2
+  echo "❌ No chapter files found. Chapters are $MS_DIR/NN_Name.md" >&2
   exit 1
 }
 
@@ -152,7 +158,7 @@ if $EXTRAS; then
   printf '::: theend\n:::\n' > "$TMPDIR_BUILD/theend.md"
   INPUTS+=("$TMPDIR_BUILD/theend.md")
   shopt -s nullglob
-  INPUTS+=(manuscript/back/*.md)
+  INPUTS+=("$MS_DIR"/back/*.md)
   shopt -u nullglob
 fi
 
@@ -167,7 +173,12 @@ else                               STEP=1000    # novel: nearest thousand
 fi
 ROUNDED=$(( (RAW_WORDS + STEP / 2) / STEP * STEP ))
 GROUPED=$(printf '%d' "$ROUNDED" | sed -e :a -e 's/\(.*[0-9]\)\([0-9]\{3\}\)/\1,\2/;ta')
-WORDCOUNT="about ${GROUPED} words"
+
+# The phrase is configurable so a Dutch cover sheet can say "ongeveer … woorden".
+WORDCOUNT_TEXT=$(read_meta wordcount-text)
+[[ "$WORDCOUNT_TEXT" == *%s* ]] || WORDCOUNT_TEXT="about %s words"
+PLACEHOLDER='%s'
+WORDCOUNT="${WORDCOUNT_TEXT//"$PLACEHOLDER"/$GROUPED}"
 echo "🔢 ${RAW_WORDS} words → ${WORDCOUNT}"
 
 # ------------------------------------------------------------
@@ -177,21 +188,21 @@ mkdir -p "$OUTDIR"
 
 SUFFIX="manuscript"
 $CLASSIC && SUFFIX="manuscript_classic"
-OUTFILE="$OUTDIR/${SLUG}_${VERSION}_${SUFFIX}.pdf"
+OUTFILE="$OUTDIR/${SLUG}_${VERSION}_${BOOK_LANG}_${SUFFIX}.pdf"
 
-echo "⚙️  Building Shunn-format PDF $VERSION..."
+echo "⚙️  Building Shunn-format PDF $VERSION ($BOOK_LANG)..."
 
 PANDOC_ARGS=(
   "${INPUTS[@]}"
   --from=markdown
-  --metadata-file="$BOOK_CONFIG"
+  "${META_ARGS[@]}"
   --template="$TEMPLATE"
   --lua-filter="$FILTER"
   # Without this, a fenced block becomes \begin{Shaded}, whose macros come
   # from pandoc's own template — which we replace. Plain verbatim needs no
   # package and is what a manuscript wants anyway.
   --no-highlight
-  --resource-path="manuscript:images:."
+  --resource-path="$MS_DIR:images:."
   --pdf-engine=xelatex
   --variable=mainfont:"$MAINFONT"
   --variable=papersize:"$PAPERSIZE"

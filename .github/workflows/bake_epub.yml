@@ -30,12 +30,15 @@ jobs:
 
       # The build stamp and the release history are generated inside the bake
       # script, not here, so that a local build produces the same EPUB as CI.
+      # Every folder in manuscript/ is a language; each gets its own EPUB.
       - name: Bake EPUB
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           chmod +x epub/bake_book_epub.sh
-          epub/bake_book_epub.sh --auto
+          for dir in manuscript/*/; do
+            epub/bake_book_epub.sh --auto --lang="$(basename "$dir")"
+          done
 
       # Always kept, so an untagged manual run still gives you something to
       # download and check.

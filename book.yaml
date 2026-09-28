@@ -5,47 +5,62 @@
 # EPUB, the PDF and the output filenames at once. There is no second place to
 # keep in sync.
 #
+# More than one language? Each lives in manuscript/<code>/, and a book.yaml
+# there overrides any key below for that language only — the title, the blurb,
+# the identifier. See "Another language" in README.md.
+#
 # The one exception is index.html, which GitHub Pages serves as a static file
 # and so cannot read anything at build time. ./setup.sh fills that in once.
 # =============================================================================
 
 # --- Identity ----------------------------------------------------------------
-title:       "Your Book Title"
-byline:      "A. N. Author"          # as it appears on the PDF cover sheet
-author-sort: "Author, A. N."         # library sort order, for the EPUB
-description: "One sentence about your book."
-rights:      "© 2026 A. N. Author"
+# Shared by every language. Each manuscript/<code>/book.yaml overrides title,
+# description, slug and identifier with its own.
+title:       "De Romance van Artemis en Callisto"
+byline:      "F. J. S. Remmelzwaal"         # as it appears on the PDF cover sheet
+author-sort: "Remmelzwaal, Floortje J. S."  # library sort order, for the EPUB
+description: "Een mythische romance tussen de godin Artemis en de nimf Callisto."
+rights:      "© 2026 F. J. S. Remmelzwaal"
 publisher:   "self-published"
-lang:        "en"
+
+# The language built when you don't pass --lang: the manuscript/<code>/ folder.
+lang:        "nl"
 
 # Output filenames are built from this. Keep it filesystem-safe: no spaces,
-# no slashes.  ->  versions/Your_Book_Title_v1.0.0.epub
-slug:        "Your_Book_Title"
+# no slashes.  ->  versions/Artemis_en_Callisto_v1.0.0_nl.epub
+slug:        "Artemis_en_Callisto"
 
-# A unique, permanent id for the EPUB. ./setup.sh generates a real one.
-# Never copy another book's identifier — e-readers use it to tell books apart.
-identifier:  "urn:uuid:__UUID__"
+# A unique, permanent id for the EPUB — see "The identifier" in README.md.
+# This one belongs to the default language (nl). Never copy another book's
+# identifier: e-readers use it to tell books apart. A translation is another
+# book, so it needs its own too.
+identifier:  "urn:uuid:ad861c7d-dbc6-4086-b04e-80b3228d7fd1"
 
 # --- Running header (Shunn format: "Surname / Keyword / Page") ----------------
-surname:     "Author"
-shorttitle:  "Keyword"
+surname:     "Remmelzwaal"
+shorttitle:  "Artemis"
 
 # --- Where it lives ----------------------------------------------------------
 github:
-  owner: "__GH_OWNER__"
-  repo:  "__GH_REPO__"
+  owner: "fluxpiada"
+  repo:  "artemis_callisto"
 
 cover: "images/cover.png"
+
+# --- Words the build writes into your book -----------------------------------
+# Translate these in manuscript/<code>/book.yaml for another language.
+wordcount-text: "ongeveer %s woorden"  # PDF cover sheet; %s is the rounded count
+edition-text:   "Huidige editie"       # last line of the EPUB's release history
 
 # --- The PDF cover sheet -----------------------------------------------------
 # Shunn puts your contact details in the upper-left of page one: legal name,
 # address, phone, email. Fill the bracketed lines in before submitting
 # anywhere. Do NOT add a tax or national insurance number.
 contact:
-  - "A. N. Author"
+  - "Floortje J. S. Remmelzwaal"
   - "[street and number]"
-  - "[postcode] [city]"
-  - "[country]"
+  - "[postcode] Arnhem"
+  - "The Netherlands"
   - "[phone]"
   - "[email]"
 

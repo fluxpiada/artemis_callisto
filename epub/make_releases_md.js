@@ -3,7 +3,10 @@
 // Writes a short release history into the manuscript, so the EPUB carries a
 // list of the editions that came before it.
 //
-//   node epub/make_releases_md.js <owner> <repo> <output-path>
+//   node epub/make_releases_md.js <owner> <repo> <output-path> [edition-text]
+//
+// edition-text labels the last line, so a Dutch edition can say "Huidige
+// editie". It defaults to "Current edition".
 //
 // This talks to the network, and the network fails. A book build must never
 // depend on GitHub being reachable, so every failure here — no releases, a
@@ -15,10 +18,10 @@ const fs = require("fs");
 const path = require("path");
 const https = require("https");
 
-const [owner, repo, outPath] = process.argv.slice(2);
+const [owner, repo, outPath, editionText = "Current edition"] = process.argv.slice(2);
 
 if (!owner || !repo || !outPath) {
-  console.error("usage: make_releases_md.js <owner> <repo> <output-path>");
+  console.error("usage: make_releases_md.js <owner> <repo> <output-path> [edition-text]");
   process.exit(2);
 }
 
@@ -33,7 +36,7 @@ function write(releases) {
     const date = (r.published_at || "").substring(0, 10) || "unknown";
     md += centred(`${name} — ${date}`) + "\n";
   }
-  md += centred(`Current edition — ${today}`);
+  md += centred(`${editionText} — ${today}`);
 
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, md);

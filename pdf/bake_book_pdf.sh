@@ -31,7 +31,9 @@ Usage: pdf/bake_book_pdf.sh [options]
 
   --auto           Take the version from the latest git tag (for CI)
   --version=VER    Use VER as the version string
-  --lang=CODE      Build manuscript/CODE/ (default: lang: in book.yaml)
+  --lang=CODES     Build only these languages: --lang=nl or --lang=nl,fr.
+                   --lang=all builds every folder in manuscript/. Without
+                   it: the publish: list in book.yaml, or every language
   --font=NAME      Typeset in NAME (e.g. --font="Georgia"). Overrides the
                    mainfont: key in book.yaml
   --list-fonts     List font families installed on this machine, then exit
@@ -86,6 +88,15 @@ fi
 for f in "$TEMPLATE" "$FILTER"; do
   [[ -f "$f" ]] || { echo "❌ Missing $f — run this from the repo root." >&2; exit 1; }
 done
+
+# Every option except the language and the version goes to each language's
+# build unchanged; the version is passed already resolved, so a prompt or a
+# git lookup happens once, not once per language.
+PASS_ARGS=()
+for arg in "$@"; do
+  case "$arg" in --lang=*|--version=*|--auto) ;; *) PASS_ARGS+=("$arg") ;; esac
+done
+build_languages "${BASH_SOURCE[0]}" "$BUILD_LANG" --version="$VERSION" ${PASS_ARGS[@]+"${PASS_ARGS[@]}"}
 
 use_language "$BUILD_LANG"
 
@@ -172,7 +183,28 @@ elif (( RAW_WORDS < 40000 )); then STEP=500     # novella: nearest five hundred
 else                               STEP=1000    # novel: nearest thousand
 fi
 ROUNDED=$(( (RAW_WORDS + STEP / 2) / STEP * STEP ))
-GROUPED=$(printf '%d' "$ROUNDED" | sed -e :a -e 's/\(.*[0-9]\)\([0-9]\{3\}\)/\1,\2/;ta')
+
+# Thousands are grouped the way the language writes them: 1,000 in English,
+# 1.000 in Dutch or German, 1 000 in French (a no-break space, so the number
+# never splits across lines). thousands-separator: in book.yaml overrides it.
+THOUSANDS=$(read_meta thousands-separator)
+if [[ -z "$THOUSANDS" ]]; then
+  case "$BOOK_LANG" in
+    en|en-*|ja|ja-*|zh|zh-*|ko|ko-*|he|he-*|th|th-*) THOUSANDS="," ;;
+    fr|fr-*|sv|sv-*|nb|nb-*|nn|nn-*|no|no-*|fi|fi-*|pl|pl-*|cs|cs-*|sk|sk-*|ru|ru-*|uk|uk-*|et|et-*|lv|lv-*|lt|lt-*|hu|hu-*|bg|bg-*)
+      THOUSANDS=$(printf '\xc2\xa0') ;;
+    *) THOUSANDS="." ;;  # nl, de, da, es, it, pt, and most of continental Europe
+  esac
+fi
+GROUPED=$ROUNDED
+if (( ROUNDED >= 1000 )); then
+  n=$ROUNDED GROUPED=""
+  while (( ${#n} > 3 )); do
+    GROUPED="${THOUSANDS}${n: -3}${GROUPED}"
+    n=${n:0:${#n}-3}
+  done
+  GROUPED="${n}${GROUPED}"
+fi
 
 # The phrase is configurable so a Dutch cover sheet can say "ongeveer … woorden".
 WORDCOUNT_TEXT=$(read_meta wordcount-text)

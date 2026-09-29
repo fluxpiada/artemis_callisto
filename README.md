@@ -57,16 +57,40 @@ language code: `Artemis_en_Callisto_v0.1.0_nl.epub`.
 
 ### Choosing the language
 
-Without `--lang`, both scripts build the language set by `lang:` in the root
-`book.yaml`. Pass `--lang=` to build another one:
+Without `--lang`, both scripts build **every language** — one EPUB or PDF per
+folder in `manuscript/`. To build fewer, pass `--lang=`:
 
 ```bash
-epub/bake_book_epub.sh --version=v0.1.0 --lang=fr
-pdf/bake_book_pdf.sh   --version=v0.1.0 --lang=fr
+epub/bake_book_epub.sh --version=v0.1.0 --lang=nl        # just this one
+pdf/bake_book_pdf.sh   --version=v0.1.0 --lang=nl,fr     # these two
+epub/bake_book_epub.sh --version=v0.1.0 --lang=all       # every folder, whatever book.yaml says
 ```
 
+To fix which languages a release publishes, list them in the root `book.yaml`:
+
+```yaml
+publish: [nl]
+```
+
+A build without `--lang` then builds only those: locally, on a tag, and on a
+manual Actions run with the *languages* box left empty. Leave `publish:` out
+and every language is built. `--lang=` always wins.
+
 The code is the folder name under `manuscript/`. Ask for one that doesn't exist
-and the script lists the ones that do.
+and the script lists the ones that do; the other languages still build, and the
+run ends with an error naming the one that failed.
+
+### How the EPUB opens
+
+1. **The cover** — the `cover:` image from `book.yaml`. See [The cover](#the-cover).
+2. **Title and copyright page** — `front/10_title.md`, with the release
+   history and build stamp the build adds underneath.
+3. **Contents** — generated on every build, headed by `contents-text:`
+   (*Inhoud*, *Table des matières*). It lists your chapters and nothing marked
+   `{.unlisted}`.
+4. **Chapter one.**
+
+The e-reader's own contents menu lists the same chapters.
 
 The PDF also takes `--a4`, `--classic`, `--title-page`, `--with-extras` and
 `--font=`. Run it with `--help`, or see
@@ -87,9 +111,11 @@ git tag -a v0.1.0 -m "First release"
 git push origin v0.1.0
 ```
 
-Both workflows build every language, and attach the EPUBs and PDFs to the
+Both workflows build every language — or the ones in `publish:`, see
+[Choosing the language](#choosing-the-language) — and attach the EPUBs and PDFs to the
 Release. To get a build without tagging, run either workflow from the Actions
-tab and download the artifact.
+tab and download the artifact. Its *languages* box takes `nl` or `nl,fr`;
+left empty, it builds what a tag would.
 
 To put the download page online, turn on GitHub Pages in Settings and point it
 at the `main` branch, folder `/`. There is no site build step — `index.html` is
@@ -121,6 +147,33 @@ read config. `setup.sh` fills it in once.
 `author-sort` is how libraries and e-readers file the book: surname first.
 `description` is the blurb a reader sees in their library, so write it in the
 language of that edition.
+
+## The cover
+
+E-readers show the cover as a picture — in the library, the store, the file
+list — so the title and author have to be *in* the image. `epub/make_cover.py`
+does that: it takes `cover-art:` from `book.yaml`, puts the title above it and
+the author below, and writes a portrait 1600 × 2560 JPEG per language.
+
+```bash
+# macOS / Linux / Windows (PowerShell), with uv
+uv run --with pillow epub/make_cover.py --lang=nl
+uv run --with pillow epub/make_cover.py --lang=fr
+```
+
+Without uv, install Pillow once (`pip install pillow`) and run
+`python3 epub/make_cover.py --lang=nl` — on Windows `py epub/make_cover.py --lang=nl`.
+
+That writes `images/cover_nl.jpg` and `images/cover_fr.jpg`. Point `cover:` at
+them — the root `book.yaml` for the default language, `manuscript/fr/book.yaml`
+for French — and commit the images. Run it again whenever a title changes; the
+build itself never runs it, so CI needs no Python.
+
+It uses the first serif it finds (Didot, Palatino, Georgia on a Mac). Pick
+another with `--font=/path/to/Font.ttf`.
+
+> Written and tested on macOS. The Windows font paths are in the script but
+> have not been tried on a Windows machine.
 
 ## The identifier
 
@@ -176,19 +229,23 @@ Then generate a new identifier ([see above](#the-identifier)), put it in
 title:          "La Romanze d'Artémis et de Callisto"
 shorttitle:     "Artémis"
 slug:           "Artemis_et_Callisto"
+cover:          "images/cover_fr.jpg"
 description:    "Une romance mythique entre la déesse Artémis et la nymphe Callisto."
 rights:         "© 2026 F. J. S. Remmelzwaal"
 identifier:     "urn:uuid:a8c22ec5-9d93-4cd8-9c54-82cf537d6020"
 wordcount-text: "environ %s mots"
 edition-text:   "Édition actuelle"
+contents-text:  "Table des matières"
 ```
 
 This file only holds what differs. Anything it leaves out — author, contact
-block, cover, font — comes from the root `book.yaml`. Add `cover:` if the
-French edition has its own cover. You don't write `lang:` here: the folder
-name sets it.
+block, cover art, font — comes from the root `book.yaml`. The cover has the
+title on it, so each language gets its own: run `epub/make_cover.py --lang=fr`
+([The cover](#the-cover)). You don't write `lang:` here: the folder name sets
+it.
 
-Build it with `--lang=fr`. On a tag, CI builds every language on its own.
+Build just this language with `--lang=fr`; without it, French is built along
+with the rest.
 
 ## Getting template updates
 
@@ -217,12 +274,16 @@ this README are never touched. Build once to check, then commit.
 | You write | You get |
 | --- | --- |
 | `# Chapter I - The Fjord` | a chapter opening, and a table-of-contents entry |
+| `# Dankwoord {.unlisted}` | a page with that heading, left out of the contents — use it for the title page and acknowledgments |
 | `## ~ * ~` | a scene break, centred |
 | `*emphasis*` | italic, or underlined with `--classic` |
 | `<!-- a note -->` | nothing — pandoc drops comments from every format |
 
 Chapter files sort by filename, so keep the numbers padded: `01_`, `02_`, …
 `10_`. That order *is* the order of your book.
+
+Start every file with its `#` heading, on the first line. Anything above it —
+even an HTML comment — becomes an empty page of its own.
 
 ## Checking your prose
 

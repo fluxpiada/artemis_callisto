@@ -2,6 +2,11 @@ name: Bake EPUB
 
 on:
   workflow_dispatch:
+    inputs:
+      languages:
+        description: "Languages to build, e.g. nl or nl,fr. Empty: the publish: list in book.yaml, or all"
+        type: string
+        default: ""
   push:
     tags:
       - "v*.*.*"
@@ -30,15 +35,17 @@ jobs:
 
       # The build stamp and the release history are generated inside the bake
       # script, not here, so that a local build produces the same EPUB as CI.
-      # Every folder in manuscript/ is a language; each gets its own EPUB.
+      # One EPUB per language. Which languages: the box on a manual run, else
+      # publish: in book.yaml, else every folder in manuscript/. The script
+      # decides, so a local build without --lang picks the same ones.
+      # The input goes through env, never straight into the script text.
       - name: Bake EPUB
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LANGUAGES: ${{ inputs.languages }}
         run: |
           chmod +x epub/bake_book_epub.sh
-          for dir in manuscript/*/; do
-            epub/bake_book_epub.sh --auto --lang="$(basename "$dir")"
-          done
+          epub/bake_book_epub.sh --auto ${LANGUAGES:+--lang="$LANGUAGES"}
 
       # Always kept, so an untagged manual run still gives you something to
       # download and check.

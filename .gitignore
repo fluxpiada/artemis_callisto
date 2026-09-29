@@ -8,3 +8,4 @@ versions/*
 # Generated into the manuscript at build time.
 manuscript/*/front/20_releases.md
 manuscript/*/front/30_build_info.md
+manuscript/*/front/40_contents.md

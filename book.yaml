@@ -23,8 +23,14 @@ description: "Een mythische romance tussen de godin Artemis en de nimf Callisto.
 rights:      "© 2026 F. J. S. Remmelzwaal"
 publisher:   "self-published"
 
-# The language built when you don't pass --lang: the manuscript/<code>/ folder.
+# The book's original language: a manuscript/<code>/ folder. Its edition uses
+# the identifier below; every other language needs its own.
 lang:        "nl"
+
+# Which languages a build publishes, when you don't pass --lang: a tagged
+# release, a manual Actions run with the languages box empty, or a local
+# build. Leave it out to build every folder in manuscript/.
+# publish: [nl]
 
 # Output filenames are built from this. Keep it filesystem-safe: no spaces,
 # no slashes.  ->  versions/Artemis_en_Callisto_v1.0.0_nl.epub
@@ -45,12 +51,19 @@ github:
   owner: "fluxpiada"
   repo:  "artemis_callisto"
 
-cover: "images/cover.png"
+# The cover the EPUB shows: the painting with title and author on it, made by
+# epub/make_cover.py from cover-art. Each language has its own, because the
+# title differs. See "The cover" in README.md.
+cover:     "images/cover_nl.jpg"
+cover-art: "images/artemis_callisto_boucher.jpg"
 
 # --- Words the build writes into your book -----------------------------------
 # Translate these in manuscript/<code>/book.yaml for another language.
 wordcount-text: "ongeveer %s woorden"  # PDF cover sheet; %s is the rounded count
+# thousands-separator: "."          # the count's 1,000 / 1.000 / 1 000 — set
+#                                   # from the language; only override if wrong
 edition-text:   "Huidige editie"       # last line of the EPUB's release history
+contents-text:  "Inhoud"               # heading of the EPUB's contents page
 
 # --- The PDF cover sheet -----------------------------------------------------
 # Shunn puts your contact details in the upper-left of page one: legal name,

@@ -7,6 +7,7 @@ title:          "La Romanze d'Artémis et de Callisto"
 shorttitle:     "Artémis_Callisto"             # running header on the PDF
 slug:           "Artemis_et_Callisto" # -> versions/Artemis_et_Callisto_v1.0.0_fr.epub
 description:    "Une romance mythique entre la déesse Artémis et la nymphe Callisto."
+cover:          "images/cover_fr.jpg"   # made by epub/make_cover.py --lang=fr
 rights:         "© 2026 F. J. S. Remmelzwaal"
 
 # Permanent id for this edition — never change it, never reuse it.
@@ -16,3 +17,4 @@ identifier:     "urn:uuid:a8c22ec5-9d93-4cd8-9c54-82cf537d6020"
 # --- Words the build writes into your book -----------------------------------
 wordcount-text: "environ %s mots"
 edition-text:   "Édition actuelle"
+contents-text:  "Table des matières"

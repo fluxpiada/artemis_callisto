@@ -3,6 +3,10 @@ name: Bake PDF (Shunn manuscript format)
 on:
   workflow_dispatch:
     inputs:
+      languages:
+        description: "Languages to build, e.g. nl or nl,fr. Empty: the publish: list in book.yaml, or all"
+        type: string
+        default: ""
       a4:
         description: "A4 paper instead of US Letter"
         type: boolean
@@ -51,17 +55,20 @@ jobs:
             fonts-liberation \
             poppler-utils
 
-      # 3. Bake the manuscript — one PDF per folder in manuscript/
+      # 3. Bake the manuscript — one PDF per language. Which languages: the box
+      #    on a manual run, else publish: in book.yaml, else every folder in
+      #    manuscript/. The input goes through env, never into the script text.
       - name: Bake PDF
+        env:
+          LANGUAGES: ${{ inputs.languages }}
         run: |
           chmod +x pdf/bake_book_pdf.sh
           ARGS=(--auto)
+          [[ -n "$LANGUAGES" ]]                      && ARGS+=(--lang="$LANGUAGES")
           [[ "${{ inputs.a4 }}" == "true" ]]         && ARGS+=(--a4)
           [[ "${{ inputs.title_page }}" == "true" ]] && ARGS+=(--title-page)
           [[ "${{ inputs.classic }}" == "true" ]]    && ARGS+=(--classic)
-          for dir in manuscript/*/; do
-            pdf/bake_book_pdf.sh "${ARGS[@]}" --lang="$(basename "$dir")"
-          done
+          pdf/bake_book_pdf.sh "${ARGS[@]}"
         shell: bash
 
       # 4. Sanity check, on every PDF. Assert real structure rather than "a #

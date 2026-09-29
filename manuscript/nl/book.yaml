@@ -16,3 +16,4 @@ identifier:     "urn:uuid:ad861c7d-dbc6-4086-b04e-80b3228d7fd1"
 # --- Words the build writes into your book -----------------------------------
 wordcount-text: "ongeveer %s woorden"
 edition-text:   "Huidige editie"
+contents-text:  "Inhoud"

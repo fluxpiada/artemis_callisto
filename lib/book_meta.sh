@@ -9,6 +9,7 @@
 #   $TMPDIR_BUILD      scratch dir, removed on exit
 #   read_meta KEY      one value out of book.yaml (nested: read_meta github.owner)
 #   use_language CODE  pick manuscript/CODE/; sets $BOOK_LANG, $MS_DIR, $META_ARGS
+#   languages_to_build LIST   the language codes a build run covers
 #   "${META_ARGS[@]}"  the pandoc arguments that feed the config to a build
 
 BOOK_CONFIG="${BOOK_CONFIG:-book.yaml}"
@@ -48,6 +49,66 @@ read_meta() {
   printf '$%s$' "$1" > "$TMPDIR_BUILD/meta.tpl"
   pandoc /dev/null --from=markdown "${META_ARGS[@]}" \
     --template="$TMPDIR_BUILD/meta.tpl" --wrap=none -t plain 2>/dev/null | head -1
+}
+
+# Which languages one run builds, as space-separated codes:
+#
+#   --lang=nl  or  --lang=nl,fr   exactly those
+#   --lang=all                    every folder in manuscript/
+#   no --lang                     publish: in book.yaml, or every folder if
+#                                 book.yaml has no publish: list
+#
+# The argument is whatever came after --lang= (empty when not given). Codes
+# are not checked here; use_language refuses one without a folder.
+languages_to_build() {
+  local want=${1:-} d all=""
+
+  for d in manuscript/*/; do
+    [[ -d "$d" ]] && { d=${d%/}; all+="${d##*/} "; }
+  done
+
+  if [[ -z "$want" ]]; then
+    printf '$for(publish)$$publish$ $endfor$' > "$TMPDIR_BUILD/publish.tpl"
+    want=$(pandoc /dev/null --from=markdown --metadata-file="$BOOK_CONFIG" \
+      --template="$TMPDIR_BUILD/publish.tpl" --wrap=none -t plain 2>/dev/null | head -1)
+  fi
+  [[ -z "${want// /}" || "$want" == "all" ]] && want=$all
+
+  # Commas or spaces, either works: --lang=nl,fr  or  publish: "nl fr".
+  echo "${want//,/ }" | xargs
+}
+
+# More than one language: run SCRIPT once per language, passing ARGS plus
+# --lang=CODE, then exit — with an error if any of them failed. Just one: set
+# $BUILD_LANG to it and return, and the caller builds it itself.
+#
+#   build_languages "${BASH_SOURCE[0]}" "$BUILD_LANG" --version="$VERSION" ...
+build_languages() {
+  local script=$1 want=$2 l failed=""
+  local -a langs
+  shift 2
+
+  read -r -a langs <<< "$(languages_to_build "$want")"
+  if [[ ${#langs[@]} -eq 0 ]]; then
+    echo "❌ No language folders in manuscript/. Chapters go in manuscript/<code>/." >&2
+    exit 1
+  fi
+  if [[ ${#langs[@]} -eq 1 ]]; then
+    BUILD_LANG=${langs[0]}
+    return
+  fi
+
+  echo "🌍 Building ${#langs[@]} languages: ${langs[*]}"
+  for l in "${langs[@]}"; do
+    echo
+    echo "━━ $l ━━"
+    bash "$script" "$@" --lang="$l" || failed+="$l "
+  done
+  if [[ -n "$failed" ]]; then
+    echo "❌ Failed: $failed" >&2
+    exit 1
+  fi
+  exit 0
 }
 
 # Each language is a folder, manuscript/<code>/, and the folder name is the

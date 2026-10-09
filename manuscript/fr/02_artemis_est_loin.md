@@ -7,7 +7,9 @@ La lune n’offrait qu’une étroite bande d’illumination, la silhouette frag
 
 Callisto, dans un état de demi-sommeil dérivait sans plus de centre de gravité ; là, entre ses seins, sur sa sensible peau pétale, une distance sourde devenait palpable. Quelle en était l'origine ?
 
-Quand il faisait encore jour, Callisto avait été consumée par l’idée qu’Artémis puisse oublier leur amour. En attendant, elle s’était amusée à faire du cheval, se baignant dans l’eau fraîche du lac miroitant. Nage et cavalcade poursuivies par un doute: Artémis songeait-elle encore à son amante Callisto ?
+Quand il faisait encore jour, Callisto avait été consumée par l’idée qu’Artémis puisse oublier leur amour. En attendant, elle s’était amusée à faire du cheval, se baignant dans l’eau fraîche du lac miroitant. Nage et cavalcade poursuivies par un doute: 
+
+_Artémis songeait-elle encore à son amante Callisto ?_
 
 Elle ne pouvait qu'imaginer Callisto entourée par la splendeur éblouissante de son somptueux temple , peuplé de nymphes lascives. Le destin éclatant de leur rencontre s'était-il terni en hasard? Pourtant une simple mais délicieuse aventure au temple de Délos suffisait pour qu'Artémis puisse en retirer ses dons d'infatigabilité. 
 

@@ -1,17 +1,20 @@
-# Artémis s'est éloignée
+# Callisto envoyé à la chasse
 
-Cependant Artémis songeait-elle encore à son amante Callisto ?
+Artémis avait envoyé Callisto à la chasse pour mettre fin aux frasques des nymphes Oréades baignantes qui faisait tourner la tête.
+Elle en avait marre de leurs baignades sans cesse, leurs caresses palpitantes, leurs coups de langue mouillés.
 
-À cette heure, la forêt était ombragée et silencieuse. Si auparavant elle avait été témoin d’un geste divin, aujourd'hui elle se taisait comme l’eau de la source des Oréades. Chut, plus un bruit pas un murmure dans la canopée endormie..
+Elle-même, telle une impressionnante ourse perchée sur le rocher près des chutes d'eau, les avait observées d'un air malveillant. Les Oréades frivoles/ fainéantes n’avaient été impressionnées que plus d’un clin d’oeil.
 
-La lune n’offrait qu’une étroite bande d’illumination, la silhouette fragile d'une virgule évocatrice, griffure scintillante dans le néant. La lune elle aussi ne savait-elle plus rien de l’absence assourdissante d’Artémis ?
+Mais mon Dieu, leur joie, leur sensualité et leurs courbes compensaient largement tout cela. Artemis elle s'est métamorphosée en être divin pour se rendre à sa temple de Délos à fin de poursuivre ses affaires célestes.
 
-Callisto, dans un état de demi-sommeil dérivait sans plus de centre de gravité ; là, entre ses seins, sur sa sensible peau pétale, une distance sourde devenait palpable. Quelle en était l'origine ? 
+Callisto avait tendu son arc pendant la chasse jusqu'à ce que ses doigts saignent. Une goutte tombait sur sa tisse-laine de fourrure de lapin. Pour retourner dans les graces d’Artemis il faudra se prouver plus que d’être une chatte humide.
 
-Quand il faisait encore jour, Callisto avait été consumée par l’idée qu’Artémis puisse oublier leur amour. En attendant, elle s’était amusée à faire du cheval, se baignant dans l’eau fraîche du lac miroitant. 
+Une rose fleurissait au milieu des Oréades, et il fallait la cueillir à mains nues. C’était la seule chose capable de dompter les Oréades. Rendre timides leurs boucles sensuelles, fair taire leurs regards langoureux et faire dociles leurs joues rougissantes.   
 
-Cependant Artémis songeait-elle encore à son amante Callisto ?
+Si nécessité, elle donnera une gifle de la main à plat sur la joue douce de la plus grande fautrice de troubles. Puis la saisir fermement par la mâchoire effrayée et déposer un baiser doux mais impérieux sur sa bouche, griffer son corps en sueur avec ses mains forts et encore ensanglantés, lui agripper fermement les fesses, encore froides et humides après la baignade et l’entendre gémir en l’embrassant et sentir son corps de nymphe s’affaisser dans ses bras puissants.
 
-Qu'entourée par la splendeur éblouissante de son somptueux temple , peuplé de nymphes lascives, le destin de leur rencontre ne se transforme en hasard. Une simple mais délicieuse aventure au temple de Délos suffisait pour qu'Artémis puisse retirer ses dons de l'infatigabilité. Là où, à la tombée de la nuit, les lampes tempêtes étaient allumées, et d’où les mets chauds étaient apportés sans fin depuis les cuisines. Cette scène d’opulence éveilla en Callisto un désir ardent - aboutissant à des cauchemars sanglants et sinistres. 
+Les autres Oréades tournaient autour du couple comme des abeilles autour du calice d’une fleur, enivrées par le nectar divin. Callisto maîtrisa la vierge pour Artémis, qui était implacable dans sa soif de sacrifices.
 
-Éreintée, rien ne la faisait plus rêver que de pouvoir une fois encore sécher la fatigue de son corps, laisser son âme s'évaporer dans les bras adorés de sa chère Artémis.
+« Callisto, Callisto… » Elle entendit son nom porté par le vent nocturne, le vit écrit dans les yeux de la vierge. Tout tournait autour d’Artémis : la douce lueur de la lune croissante, le grognement du lynx qui dormait d’un sommeil agité, ses rêves chauds, humides, terrestres et insaisissables. La nymphe fut transportée par la passion brûlante de Callisto et réduisit au silence sa résistance au nom de l’amour aveuglant qu’elle portait à Artémis.
+
+ ## ~ * ~

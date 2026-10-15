@@ -1,4 +1,4 @@
-# Callisto envoyé à la chasse
+# Callisto envoyée à la chasse
 
 Artémis avait envoyé Callisto à la chasse pour mettre fin aux frasques des nymphes Oréades baignantes qui faisait tourner la tête.
 Elle en avait marre de leurs baignades sans cesse, leurs caresses palpitantes, leurs coups de langue mouillés.

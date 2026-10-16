@@ -1,5 +1,7 @@
 # Callisto op jacht gestuurd
+
 Artemis had Callisto op jacht gestuurd. Om de tureluurs makende nimfen der Oréades te knechten. Het eindeloos badderen, zinderend aaien en natte likjes geven moest nu maar eens afgelopen zijn.
+
 Ze had zelf al als ontzagwekkende berin op de rots bij de watervallen hen boosaardig gadegeslagen, zelfs dat had maar een oogwenk indruk gemaakt op de flierefluiters. Maar god, wat maakte hun plezier, hun wellust, en hun rondingen veel goed. Artemis vervolgde haar goddelijke gang terug naar haar tempel te Delos. 
 
 Callisto had haar boog gespannen in je jacht tot haar vingers bloedde. De druppel viel op haar lendendoek van konijnenbont. Om weer in de gratie van Artemis te komen, moest ze meer bewijzen dan alleen maar een nat kutje te zijn.
@@ -9,6 +11,10 @@ Er bloeide een roos temidden van de Oréades en die moest met blote hand geplukt
 De andere Oréades dromden om het paar heen als bijen rond de kelk van een bloem, bedwelmd door de goddelijke nectar. Callisto bedwong de maagd omwille van Artemis die onverbiddelijk was in haar zucht om offers.
 
 “Callisto, Callisto…” ze hoorde haar naam op de nachtelijke wind, zag het geschreven in de ogen van de maagd. Het was Artemis om wie alles draaide: ook het weke schijnsel van de wassende maan, ook de grom van de lynx die onrustig sliep, haar dromen warm en nat en aards en ongrijpbaar. De nimf werd begeesterd door Callisto’s verzengende passie en verstomde haar weerstand in het blazoen van de verblindende liefde voor Artemis.
+
+Callisto draaide de uitgeputte nimf om haar as en liet haar uit haar armen vallen. Ze dreigde in elkaar te zakken, niet meer in staat zich te been te houden. De andere nimfen schoten toe om haar verzwakte lijf op te vangen zodat ze niet in de modder zou wegzakken. 
+
+Callisto trok haar jachtmes uit haar riem en met één felle haal sneed ze de enkele roos uit de rozenstruik. Als mistflarden dreven de Oreades weg, en loste op in het duister wordende bos. 
 
 ## ~ * ~ 
 
